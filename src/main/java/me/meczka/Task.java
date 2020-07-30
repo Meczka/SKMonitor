@@ -75,7 +75,7 @@ public class Task {
                         Item item = new Item(name,price,productLink,sizes,imageUrl,pid);
                         items.add(item);
                     }
-                    app.resolveItems(items);
+                    app.resolveItems(items, httpClient);
                 }catch (Exception e){e.printStackTrace();}
                 try {
                     Thread.sleep(500);

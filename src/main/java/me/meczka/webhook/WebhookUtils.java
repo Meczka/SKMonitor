@@ -2,27 +2,29 @@ package me.meczka.webhook;
 
 
 import me.meczka.Item;
+import me.meczka.utils.FileManager;
 
 import java.awt.*;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
 public class WebhookUtils {
-    private final static String WEBHOOK_URL = "https://discordapp.com/api/webhooks/723977270267478077/382Z7XUjQo6gPYDA9E8xhiYNDkrMh5L_CdTwy0OUbEKDEiyebZ4eu3EsWUz8q2BfTzf6",
+    private final static String WEBHOOK_URL = FileManager.readFileAsString(new File("webhook.txt")),
     SK_IMG = "https://sklepkoszykarza.pl/img/koszykarz/favicon.png";
     public static void newItemWebhook(Item item)
     {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         DiscordWebhook discordWebhook = new DiscordWebhook(WEBHOOK_URL);
-        discordWebhook.setAvatarUrl(SK_IMG);
+    //    discordWebhook.setAvatarUrl(SK_IMG);
         discordWebhook.setUsername("SK Monitor");
         System.out.println(item.getImageUrl());
         DiscordWebhook.EmbedObject embed = new DiscordWebhook.EmbedObject()
                 .setUrl(item.getItemLink())
-                .setTitle(item.getName())
+                .setTitle(item.getName().replace("\"","\\\""))
                 .setAuthor("NEW PRODUCT",null,null)
                 .setThumbnail(item.getImageUrl())
                 .setFooter("Hypemonitor " + dtf.format(now),"https://res.cloudinary.com/dklrin11o/image/twitter_name/w_600/Hypemonitorpl.jpg")
@@ -63,7 +65,7 @@ public class WebhookUtils {
         LocalDateTime now = LocalDateTime.now();
         DiscordWebhook discordWebhook = new DiscordWebhook(WEBHOOK_URL);
         discordWebhook.setAvatarUrl(SK_IMG);
-        discordWebhook.setUsername("CL20 Monitor");
+        discordWebhook.setUsername("SK MONITOR");
         System.out.println(newItem.getImageUrl());
         DiscordWebhook.EmbedObject embed = new DiscordWebhook.EmbedObject()
                 .setUrl(newItem.getItemLink())
